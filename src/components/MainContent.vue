@@ -1,6 +1,6 @@
 <template>
   <div>
-    主页
+    主页 laravel
   </div>
 </template>
 
