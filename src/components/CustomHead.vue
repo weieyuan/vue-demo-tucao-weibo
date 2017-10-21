@@ -5,9 +5,9 @@
     </div>
     <div class="rightContent">
       <div class="container">
-        <span>首页</span>
-        <span>注册</span>
-        <span>登录</span>
+        <span class="nav-item">首页</span>
+        <span class="nav-item">注册</span>
+        <span class="nav-item">登录</span>
       </div>
     </div>
   </nav>
@@ -39,6 +39,9 @@
     .rightContent {
       width: calc(~"100%" - @logoWidth);
       float: left;
+      .nav-item{
+        color: #FFFFFF;
+      }
     }
   }
 </style>

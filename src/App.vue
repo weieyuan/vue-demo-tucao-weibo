@@ -2,7 +2,7 @@
   <div id="app">
     <custom-head></custom-head>
     <div class="content">
-      <div class="container">
+      <div class="container main-container">
         <router-view/>
       </div>
     </div>
@@ -21,6 +21,9 @@
 <style scoped lang="less">
 .content{
   background-color: #ebebeb;
+  .main-container{
+    padding-top: 35px;
+  }
 }
 
 </style>
