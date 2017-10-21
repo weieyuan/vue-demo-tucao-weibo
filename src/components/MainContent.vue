@@ -10,6 +10,7 @@
             <div class="media-body">
               <h4 class="remark-person-name">匿***名</h4>
               <p class="media-heading">0月21日10:00，十九大新闻中心第三场记者招待会，邀请中共中央统战部常务副部长张裔炯、副部长冉万祥，中共中央对外联络部副部长郭业洲介绍有关情况，并回答记者提问。</p>
+              <div class="remark-foot"><span class="glyphicon glyphicon-thumbs-up active"></span> (100)</div>
             </div>
           </div>
         </div>
@@ -68,18 +69,24 @@
     background-color: #FFFFFF;
     padding: 10px;
     .remark{
-      min-height: 54px;
+      min-height: 50px;
+      .person-icon{
+        width: 48px;
+        height: 48px;
+      }
       .remark-person-name{
         color: #006a92;
       }
+      p{
+        font-family: Georgia,"Xin Gothic","Hiragino Sans GB","Droid Sans Fallback","Microsoft YaHei",sans-serif;;
+      }
+      .remark-foot{
+        float: right;
+      }
     }
-    .person-icon{
-      width: 48px;
-      height: 48px;
-    }
-    p{
-      font-family: Georgia,"Xin Gothic","Hiragino Sans GB","Droid Sans Fallback","Microsoft YaHei",sans-serif;;
-    }
+  }
+  .active:hover{
+    cursor:pointer
   }
 
   .left-panel-custom{
