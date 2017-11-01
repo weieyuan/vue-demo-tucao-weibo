@@ -26,10 +26,14 @@
 <style scoped lang="less">
   @logoWidth: 144px;
   .main-navigation {
+    position: fixed;
+    top: 0;
+    z-index: 100;
     width: 100%;
     height: 56px;
     line-height: 56px;
     background-color: #F3726D;
+
     .logo {
       width: @logoWidth;
       height: 100%;

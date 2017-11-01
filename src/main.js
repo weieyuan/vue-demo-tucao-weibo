@@ -7,6 +7,8 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
+import "@/css/app.less"
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

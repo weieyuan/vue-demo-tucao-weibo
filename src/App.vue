@@ -14,16 +14,24 @@
 
   export default {
     components: {CustomHead},
-    name: 'app'
+    name: 'app',
+    data: function () {
+      return {};
+    },
+    methods: {
+
+    }
   }
 </script>
 
 <style scoped lang="less">
-.content{
-  background-color: #ebebeb;
-  .main-container{
+  .content {
+    background-color: #ebebeb;
+
+  .main-container {
     padding-top: 35px;
   }
-}
+
+  }
 
 </style>
