@@ -16,14 +16,14 @@
 <script>
   export default {
     name: "CustomHead",
-    data: function(){
+    data: function () {
       return {};
     },
   }
 
 </script>
 
-<style scoped lang="less">
+<style scoped lang="less" type="text/less">
   @logoWidth: 144px;
   .main-navigation {
     position: fixed;
@@ -40,10 +40,12 @@
       padding-left: 10px;
       float: left
     }
+
     .rightContent {
       width: calc(~"100%" - @logoWidth);
       float: left;
-      .nav-item{
+
+      .nav-item {
         color: #FFFFFF;
       }
     }

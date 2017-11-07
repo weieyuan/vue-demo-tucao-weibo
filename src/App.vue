@@ -18,20 +18,15 @@
     data: function () {
       return {};
     },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="less" type="text/less">
   .content {
     background-color: #ebebeb;
-
-  .main-container {
-    padding-top: 35px;
+    .main-container {
+      padding-top: 35px;
+    }
   }
-
-  }
-
 </style>
