@@ -5,7 +5,7 @@
     </div>
     <div class="rightContent">
       <div class="container">
-        <span class="nav-item">首页</span>
+        <span class="nav-item" @click="onClickMainPage">首页</span>
         <span class="nav-item">注册</span>
         <span class="nav-item">登录</span>
       </div>
@@ -19,6 +19,11 @@
     data: function () {
       return {};
     },
+    methods: {
+      onClickMainPage(){
+        this.$router.push({name: "MainContent"});
+      }
+    }
   }
 
 </script>
@@ -47,6 +52,11 @@
 
       .nav-item {
         color: #FFFFFF;
+        font-size: 12pt;
+        margin: 0 10px;
+      }
+      .nav-item:hover{
+        cursor: pointer;
       }
     }
   }

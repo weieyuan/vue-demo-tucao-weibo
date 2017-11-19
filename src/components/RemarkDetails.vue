@@ -83,6 +83,7 @@
             name: "",
             time: 1509526435275 + 10000,
             remark: this.inputRemark,
+            replyNum: 0,
             praiseNum: 0
           };
           this.remarks.unshift(oRemark);

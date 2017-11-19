@@ -1,7 +1,7 @@
 <template>
   <div class="list-group">
     <template v-for="(remark, index) in remarks">
-      <div class="list-group-item">
+      <div class="list-group-item item-custom">
         <remark-item :remark="remark" :key="remark.id"></remark-item>
       </div>
     </template>
@@ -22,12 +22,21 @@
     data: function () {
       return {};
     },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 
 <style scoped lang="less" type="text/less">
 
+  .item-custom{
+    border: none;
+  }
+
+  .list-group-item:nth-child(2n) {
+    /*background-color: #dff0d8;*/
+  }
+
+  .list-group-item:nth-child(2n+1) {
+    /*background-color: #f2dede;*/
+  }
 </style>

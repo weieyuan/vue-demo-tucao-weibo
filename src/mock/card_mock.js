@@ -23,6 +23,7 @@ for(let i = 0; i < 10; i++){
       name: "",
       time: 1509526435275 + j * 1000,
       remark: "素质真低，坚决抵制，无法无天，绝不姑息",
+      replyNum: 102,
       praiseNum: 300
     };
     arrRemark.push(oRemark);
@@ -30,17 +31,34 @@ for(let i = 0; i < 10; i++){
   remarks[card.id] = arrRemark;
 }
 
-function getCardInfoById(strId){
+function getCardInfoById(strCardId){
   for(let i = 0, len = cards.length; i < len; i++){
     let oCard = cards[i];
-      if(oCard.id == strId){
+      if(oCard.id == strCardId){
         return oCard;
       }
   }
 };
 
-function getRemarksById(strId){
-  return remarks[strId];
+function getRemarksById(strCardId){
+  return remarks[strCardId];
+};
+
+function getReplysById(strCardId, strRemarkId){
+  let arrReply = [];
+  for(let i = 0; i < 30; i++){
+    let oReply = {
+      id: i,
+      anonymous: true,
+      pic: "",
+      name: "",
+      time: 1509526435275 + i * 1000,
+      remark: "干的漂亮",
+      praiseNum: 300
+    };
+    arrReply.push(oReply);
+  }
+  return arrReply;
 };
 
 function getNewMsgs(){
@@ -77,6 +95,7 @@ function getNewMsgs(){
 export {
   getCardInfoById,
   getRemarksById,
+  getReplysById,
   getNewMsgs
 };
 
