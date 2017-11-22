@@ -7,7 +7,7 @@
     <div>
       <c-emoji></c-emoji>
     </div>
-    <div></div>
+    <div v-html="test"></div>
   </div>
 </template>
 
@@ -22,7 +22,8 @@
     },
     data: function () {
       return {
-        emojis: []
+        emojis: [],
+        test: "&#x1F600"
       }
     },
     created(){

@@ -2,8 +2,8 @@
   <div>
     <template v-for="group in emojiGroups">
       <li>
-        <span class="emoji-item" v-for="emojiId in group">
-          <emoji :emoji="emojiId" :size="32" :set="set" :title="emojiId"
+        <span class="emoji-item" v-for="emojiObj in group">
+          <emoji :emoji="emojiObj" :size="32" :set="set" :title="emojiObj.name"
                  @click="onClickEmoji"></emoji>
         </span>
       </li>
@@ -13,7 +13,7 @@
 
 <script>
   import {Emoji} from "emoji-mart-vue"
-  import {emojiIcons} from "./emoji_icon"
+  import {emojis as emojiObjs} from "./emoji_icon"
 
   export default {
     name: "CEmoji",
@@ -31,9 +31,9 @@
       }
     },
     created() {
-      let groupNum = Math.ceil(emojiIcons.length / this.perLine);
+      let groupNum = Math.ceil(emojiObjs.length / this.perLine);
       for (let i = 0; i < groupNum; i++) {
-        let groups = emojiIcons.slice(i * this.perLine, (i + 1) * this.perLine);
+        let groups = emojiObjs.slice(i * this.perLine, (i + 1) * this.perLine);
         this.emojiGroups[i] = groups;
       }
     },
@@ -45,15 +45,7 @@
     },
     methods: {
       onClickEmoji(emoji, event){
-        console.log(emoji);
-        let index = this.emojis.indexOf(emoji);
-        if(index == -1){
-          this.emojis.push(emoji);
-        }
-        console.log(this.emojis);
-        this.$http.post("/test/emoji", emoji).then(function(res){
-          console.log();
-        });
+
       },
       backgroundImageFn(set, sheetSize){
 
