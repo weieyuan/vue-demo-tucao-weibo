@@ -7,8 +7,12 @@ import {globalConfig} from "./config"
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 import "@/css/app.less"
+import VueResource from "vue-resource"
 
 Vue.config.productionTip = false
+
+Vue.use(VueResource)
+// Vue.http.options.emulateJSON = true
 
 Vue.mixin({
   data() {
