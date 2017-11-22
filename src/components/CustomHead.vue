@@ -8,6 +8,7 @@
         <span class="nav-item" @click="onClickMainPage">首页</span>
         <span class="nav-item">注册</span>
         <span class="nav-item">登录</span>
+        <span class="nav-item" @click="onClickTest">Test</span>
       </div>
     </div>
   </nav>
@@ -22,6 +23,11 @@
     methods: {
       onClickMainPage(){
         this.$router.push({name: "MainContent"});
+      },
+      onClickTest() {
+        this.$router.push({
+          path: "/test"
+        });
       }
     }
   }

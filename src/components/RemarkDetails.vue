@@ -1,23 +1,9 @@
 <template>
   <div>
     <card-item :card="card"></card-item>
-    <div class="panel panel-default panel-remark-custom">
-      <div class="panel-body">
-        <textarea class="form-control input-style" rows="2" @keyup="onKeyup" v-model="inputRemark"></textarea>
-      </div>
-      <div class="panel-footer footer-custom">
-        <div class="btn-custom">
-          <a type="button" class="btn btn-success btn-sm" :class="{disabled: inputRemark === ''}"
-             @click.stop="addRemark">评论</a>
-        </div>
-        <div class="checkbox checkbox-custom">
-          <label>
-            <input type="checkbox" value="" v-model="checked">
-            匿名评论
-          </label>
-        </div>
-      </div>
-    </div>
+
+    <user-input-panel ref="ref4AddRemark" :btnName="btnName" @onClickBtn="addRemark"></user-input-panel>
+
     <remarks :remarks="remarks"></remarks>
   </div>
 </template>
@@ -26,11 +12,13 @@
   import CardItem from "@/components/cards/CardItem"
   import Remarks from "@/components/remark/Remarks"
   import {getCardInfoById, getRemarksById} from "@/mock/card_mock"
+  import UserInputPanel from "@/components/remark/UserInputPanel"
 
   export default {
     components: {
       CardItem,
-      Remarks
+      Remarks,
+      UserInputPanel
     },
     name: "RemarkDetails",
     props: {
@@ -39,9 +27,7 @@
     data: function () {
       return {
         card: {},
-        inputRemark: "",
-        checked: true,
-        btnStatus: "disabled",
+        btnName: "评论",
         remarks: []
       };
     },
@@ -70,24 +56,20 @@
           //TODO
         }
       },
-      onKeyup(oEvent) {
-//        let oTarget = oEvent.target;
-//        oTarget.style.height = oTarget.scrollHeight + "px";
-      },
-      addRemark(){
+      addRemark(strMessage, bAnonymous){
         if(this.debug){
           let oRemark = {
             id: this.remarks.length,
-            anonymous: this.checked,
+            anonymous: bAnonymous,
             pic: "",
             name: "",
             time: 1509526435275 + 10000,
-            remark: this.inputRemark,
+            msg: strMessage,
             replyNum: 0,
             praiseNum: 0
           };
           this.remarks.unshift(oRemark);
-          this.inputRemark = '';
+          this.$refs.ref4AddRemark.clearInputMessage();
         }
         else{
           //TODO:

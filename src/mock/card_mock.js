@@ -22,7 +22,7 @@ for(let i = 0; i < 10; i++){
       pic: "",
       name: "",
       time: 1509526435275 + j * 1000,
-      remark: "素质真低，坚决抵制，无法无天，绝不姑息",
+      msg: "素质真低，坚决抵制，无法无天，绝不姑息",
       replyNum: 102,
       praiseNum: 300
     };
@@ -53,7 +53,7 @@ function getReplysById(strCardId, strRemarkId){
       pic: "",
       name: "",
       time: 1509526435275 + i * 1000,
-      remark: "干的漂亮",
+      msg: "干的漂亮",
       praiseNum: 300
     };
     arrReply.push(oReply);

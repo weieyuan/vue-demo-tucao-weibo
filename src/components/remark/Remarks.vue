@@ -2,7 +2,7 @@
   <div class="list-group">
     <template v-for="(remark, index) in remarks">
       <div class="list-group-item item-custom">
-        <remark-item :remark="remark" :key="remark.id"></remark-item>
+        <remark-item :ref="remark.id" :remark="remark" :key="remark.id"></remark-item>
       </div>
     </template>
   </div>
