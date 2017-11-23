@@ -4,10 +4,14 @@
       <picker set="messenger" :per-line="9" :sheetSize="20" :emojiSize="24" :include="['people']"
       @click="onClickIcon"></picker>
     </div>
-    <div>
-      <c-emoji></c-emoji>
+    <div style="position: relative">
+      <button @click="showEmoji">showEmoji</button>
+      <c-emoji ref="ref4Emoji"></c-emoji>
     </div>
     <div v-html="test"></div>
+    <div>
+      <emoji emoji="1f600" :size="32" set="messenger"></emoji>
+    </div>
   </div>
 </template>
 
@@ -18,28 +22,18 @@
   export default {
     components: {
       Picker,
+      Emoji,
       CEmoji
     },
     data: function () {
       return {
         emojis: [],
-        test: "&#x1F600"
+        test: "&#x1F600",
+        bShowEmoji: false
       }
     },
     created(){
-//      this.emojis.push("grinning");
-//      this.emojis.push("smiley");
-//      this.emojis.push("smile");
-//      this.emojis.push("grin");
-//      this.emojis.push(":bowtie:");
-//      this.emojis.push(":smile:");
-//      this.emojis.push(":laughing:");
-//      this.emojis.push(":blush:");
-//      this.emojis.push(":smiley:");
-//      this.emojis.push(":relaxed:");
-//      this.emojis.push(":blush:");
-//      this.emojis.push(":blush:");
-//      this.emojis.push(":blush:");
+
     },
     methods: {
       onClickIcon(emoji, event){
@@ -48,6 +42,10 @@
           this.emojis.push(emoji);
         }
         console.log(this.emojis);
+      },
+      showEmoji(event){
+        console.log(event);
+        this.$refs.ref4Emoji.show(event.offsetX, event.offsetY);
       }
     }
   }
