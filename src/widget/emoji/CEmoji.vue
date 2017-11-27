@@ -8,12 +8,9 @@
     <div class="content">
       <template v-for="group in emojiGroups">
         <li>
-        <span class="emoji-item" v-for="emojiObj in group">
-          <emoji :emoji="emojiObj" :size="24" :sheetSize="32"
-                 :set="set" :title="emojiObj.name"
-                 :backgroundImageFn="backgroundImageFn"
-                 @click="onClickEmoji"></emoji>
-        </span>
+          <span class="emoji-item" v-for="emojiObj in group">
+            <emoji-item :emojiObj="emojiObj" @onClickEmoji="onClickEmoji"></emoji-item>
+          </span>
         </li>
       </template>
     </div>
@@ -21,26 +18,18 @@
 </template>
 
 <script>
-  import {Emoji} from "emoji-mart-vue"
   import {emojis as emojiObjs} from "./emoji_icon"
+  import EmojiItem from "./EmojiItem"
 
   export default {
     name: "CEmoji",
     components: {
-      Emoji
+      EmojiItem
     },
     props: {
       perLine: {
         type: Number,
         default: 9
-      },
-      size: {
-        type: Number,
-        default: 32
-      },
-      set: {
-        type: String,
-        default: "messenger"
       }
     },
     created() {
@@ -68,9 +57,6 @@
         this.$emit("onClickEmoji", emoji);
         this.onClickClose();
       },
-      backgroundImageFn(set, sheetSize) {
-        return "/static/images/emoji/emoji_" + sheetSize + ".png";
-      },
       show(iLeft = 0, iTop = 0) {
         this.bShow = true;
         this.left = iLeft + "px";
@@ -87,6 +73,7 @@
 <style scoped lang="less" type="text/less">
   .emoji-container {
     position: absolute;
+    z-index: 500;
     background-color: #FFFFFF;
     border: 1px solid #d5d5d5;
     box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.2);
@@ -110,14 +97,6 @@
     }
     li {
       list-style-type: none;
-      .emoji-mart-emoji {
-        padding: 6px;
-      }
-      .emoji-mart-emoji:hover {
-        background-color: #f4f4f4;
-        border-radius: 100%;
-        cursor: pointer;
-      }
     }
   }
 

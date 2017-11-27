@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="media">
     <div class="media-left">
       <img class="media-object person-icon" :src="headPic" alt="...">
     </div>
     <div class="media-body">
       <p>
-        <b class="remark-person-name">{{name}}</b>：{{infoInner.msg}}
+        <b class="remark-person-name">{{name}}:</b>
+        <display-info-with-emoji :msg="infoInner.msg"></display-info-with-emoji>
       </p>
       <div class="remark-foot">
         <div class="remark-item-left">
@@ -27,10 +28,15 @@
 <script>
   import {cardConfig} from "@/config"
   import timeFormat from "@/components/common/time_format"
+  import {EmojiItem, convertStr2Emoji, DisplayInfoWithEmoji} from "@/widget/emoji"
 
   export default {
     name: "InfoDisplayItem",
     mixins: [timeFormat],
+    components: {
+      EmojiItem,
+      DisplayInfoWithEmoji
+    },
     props: {
       info: {
         type: Object
@@ -60,8 +66,13 @@
       }
     },
     methods: {
-      onClickRightBtn(oRightBtn){
+      onClickRightBtn(oRightBtn) {
         this.$emit("onClickRightBtn", oRightBtn, this.info);
+      }
+    },
+    watch: {
+      info(oNewVal, oOldVal) {
+        this.infoInner = oNewVal;
       }
     }
   }
@@ -76,6 +87,10 @@
 
   .remark-person-name {
     color: #006a92;
+  }
+
+  p {
+    font-family: Georgia, "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;;
   }
 
   .remark-foot {

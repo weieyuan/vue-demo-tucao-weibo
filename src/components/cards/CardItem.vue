@@ -1,45 +1,23 @@
 <template>
   <div class="panel panel-default panel-custom">
-    <div class="media remark">
-      <div class="media-left">
-        <img class="media-object person-icon" :src="headPic" alt="...">
-      </div>
-      <div class="media-body">
-        <h4 class="remark-person-name">{{name}}</h4>
-        <p class="media-heading">{{cardInner.content}}</p>
-        <div class="remark-foot">
-          <div class="remark-item-left">
-            <span class="glyphicon glyphicon-thumbs-time"></span> {{cardInner.time | formatTime}}
-          </div>
-          <div class="remark-item-right" @click="onClickPraise">
-            <span class="glyphicon glyphicon-thumbs-up"></span> ({{cardInner.praiseNum}})
-          </div>
-          <div class="remark-item-right split">
-            <div class="split-line"></div>
-          </div>
-          <div class="remark-item-right" @click="onClickRemark">
-            <span class="glyphicon glyphicon-comment"></span> ({{cardInner.remarkNum}})
-          </div>
-        </div>
-      </div>
-    </div>
+    <info-display-item :info="cardInfo" @onClickRightBtn="onClickRightBtn"></info-display-item>
   </div>
 </template>
 
 <script>
-
-  import {cardConfig} from "@/config";
-  import timeFormat from "@/components/common/time_format";
+  import InfoDisplayItem from "@/components/common/InfoDisplayItem"
 
   export default {
     name: "CardItem",
+    components: {
+      InfoDisplayItem
+    },
     props: {
       card: {
         type: Object,
         required: true
       }
     },
-    mixins: [timeFormat],
     data: function () {
       return {
         cardInner: this.card
@@ -56,25 +34,38 @@
         }
       },
       onClickRemark() {
-        this.$emit("onClickRemark", this.card);
+        this.$emit("onClickRemark", this.cardInner);
+      },
+      onClickRightBtn(oRigthBtn) {
+        if (oRigthBtn.key == "praise") {
+          this.onClickPraise();
+        }
+        else if (oRigthBtn.key == "remark") {
+          this.onClickRemark();
+        }
       }
     },
     computed: {
-      headPic() {
-        if (!this.cardInner.anonymous) {
-          return this.cardInner.pic;
-        }
-        else {
-          return cardConfig.DEFAULT_PIC_URL;
-        }
-      },
-      name() {
-        if (!this.cardInner.anonymous) {
-          return this.cardInner.name;
-        }
-        else {
-          return cardConfig.DEFAULT_NAME;
-        }
+      cardInfo() {
+        let oCardInfo = {
+          pic: "",
+          name: "",
+          time: "",
+          msg: "",
+          rightBtns: []
+        };
+        Object.assign(oCardInfo, this.cardInner);
+        oCardInfo.rightBtns.push({
+          key: "praise",
+          label: this.cardInner.praiseNum,
+          icon: "glyphicon-thumbs-up"
+        });
+        oCardInfo.rightBtns.push({
+          key: "remark",
+          label: this.cardInner.remarkNum,
+          icon: "glyphicon-comment"
+        });
+        return oCardInfo;
       }
     }
   }
@@ -85,45 +76,6 @@
   .panel-custom {
     background-color: #FFFFFF;
     padding: 10px;
-    .remark {
-      min-height: 50px;
-      .person-icon {
-        width: 48px;
-        height: 48px;
-      }
-      .remark-person-name {
-        color: #006a92;
-      }
-      p {
-        font-family: Georgia, "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;;
-      }
-      .remark-foot {
-        width: 100%;
-        height: 20px;
-        color: #808080;
-        .remark-item-left {
-          float: left;
-        }
-        .remark-item-right {
-          float: right;
-        }
-        .remark-item-right:hover {
-          cursor: pointer;
-          color: #eb7350;
-        }
-        .split {
-          height: 100%;
-          padding-top: 3px;
-          padding-bottom: 3px;
-          margin-left: 10px;
-          margin-right: 10px;
-          .split-line {
-            height: 100%;
-            border-right: 1px #d5d5d5 solid;
-          }
-        }
-      }
-    }
   }
 
 </style>

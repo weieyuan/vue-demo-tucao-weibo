@@ -35,14 +35,15 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @logoWidth: 144px;
+  @import "../css/const.less";
+
   .main-navigation {
     position: fixed;
     top: 0;
     z-index: 100;
     width: 100%;
-    height: 56px;
-    line-height: 56px;
+    height: @BodyPaddingTopo;
+    line-height: @BodyPaddingTopo;
     background-color: #F3726D;
 
     .logo {

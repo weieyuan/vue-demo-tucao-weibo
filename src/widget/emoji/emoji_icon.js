@@ -326,4 +326,6 @@ const emojis = [
   {"id":"closed_umbrella","name":"Closed Umbrella","colons":":closed_umbrella:","emoticons":[],"unified":"1f302","skin":null,"native":"馃寕"}
 ];
 
-export {emojiIds, emojis};
+const smileEmoji = {"id":"smile","name":"Smiling Face with Open Mouth and Smiling Eyes","colons":":smile:","emoticons":["C:","c:",":D",":-D"],"unified":"1f604","skin":null,"native":"馃槃"};
+
+export {emojiIds, emojis, smileEmoji};

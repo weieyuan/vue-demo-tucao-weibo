@@ -4,6 +4,10 @@
       <textarea class="form-control input-style" rows="2" v-model="inputMessage"></textarea>
     </div>
     <div class="panel-footer footer-custom">
+      <span class="emoji-btn">
+        <emoji-item :emojiObj="smileEmoji" @onClickEmoji="onClickEmojiBtn"></emoji-item>
+      </span>
+      <c-emoji ref="ref4CEmoji" @onClickEmoji="onClickChooseEmoji"></c-emoji>
       <div class="btn-custom">
         <a type="button" class="btn btn-success btn-sm" :class="{disabled: inputMessage === ''}"
            @click.stop="onClickBtn">{{btnName}}</a>
@@ -20,11 +24,12 @@
 </template>
 
 <script>
-  import {Picker} from "emoji-mart-vue"
+  import {smileEmoji, EmojiItem, CEmoji, convertEmoji2Str} from "@/widget/emoji"
 
   export default {
     components: {
-      Picker
+      EmojiItem,
+      CEmoji
     },
     name: "UserInputPanel",
     props: {
@@ -34,18 +39,26 @@
       },
       btnName: String
     },
-    data: function(){
+    data: function () {
       return {
+        smileEmoji: smileEmoji,
         inputMessage: this.defaultInputMessage,
         checked: true
       };
     },
     methods: {
-      onClickBtn(){
+      onClickBtn() {
         this.$emit("onClickBtn", this.inputMessage, this.checked);
       },
-      clearInputMessage(){
+      clearInputMessage() {
         this.inputMessage = "";
+      },
+      onClickEmojiBtn(emoji, event) {
+        this.$refs.ref4CEmoji.show(event.offsetX + 24, event.offsetY + 24);
+      },
+      onClickChooseEmoji(emoji){
+        let str = convertEmoji2Str(emoji);
+        this.inputMessage += str;
       }
     }
   }
@@ -62,6 +75,7 @@
     }
 
     .footer-custom {
+      position: relative;
       height: 50px;
 
       .checkbox-custom {
@@ -73,6 +87,9 @@
 
       .btn-custom {
         float: right;
+      }
+      .emoji-btn {
+
       }
     }
   }

@@ -2,15 +2,11 @@
   <div>
     <info-display-item :info="remarkInfo" @onClickRightBtn="onClick4RemarkBtn"></info-display-item>
 
-    <div v-show="showReply">
+    <div class="reply-custom" v-show="showReply">
 
       <user-input-panel ref="ref4AddReply" :btnName="btnName" @onClickBtn="addReply"></user-input-panel>
 
-      <div class="list-group list-group-custom">
-        <div v-for="reply in replys" class="list-group-item item-custom">
-          <info-display-item :ref="reply.id" :info="replyInfo(reply)" @onClickRightBtn="onClick4ReplyBtn"></info-display-item>
-        </div>
-      </div>
+      <replys :replys="replys"></replys>
 
     </div>
   </div>
@@ -20,12 +16,14 @@
   import {cardConfig} from "@/config"
   import timeFormat from "@/components/common/time_format"
   import {getReplysById} from "@/mock/card_mock"
-  import UserInputPanel from "@/components/remark/UserInputPanel"
-  import InfoDisplayItem from "@/components/remark/InfoDisplayItem"
+  import UserInputPanel from "@/components/common/UserInputPanel"
+  import InfoDisplayItem from "@/components/common/InfoDisplayItem"
+  import Replys from "@/components/remark/Replys"
 
   export default {
     components: {
       UserInputPanel,
+      Replys,
       InfoDisplayItem
     },
     name: "RemarkItem",
@@ -84,39 +82,12 @@
           }
         }
       },
-      replyInfo(oReply) {
-        let oReplyInfo = {
-          pic: "",
-          name: "",
-          time: "",
-          msg: "",
-          rightBtns: []
-        };
-        Object.assign(oReplyInfo, oReply);
-        oReplyInfo.rightBtns.push({
-          key: "praise",
-          label: oReply.praiseNum,
-          icon: "glyphicon-thumbs-up"
-        });
-        return oReplyInfo;
-      },
-      onClick4ReplyBtn(oReplyRightBtn, oReply){
-        if(oReplyRightBtn.key == "praise"){
-          if(this.debug){
-            oReply.praiseNum += 1;
-            oReplyRightBtn.label += 1;
-          }
-          else{
-
-          }
-        }
-      },
       addReply(strMessage, bAnonymous) {
         this.remarkInner.replyNum += 1;
         if (this.debug) {
           let oReply = {
             id: this.replys.length,
-            anonymous: bAnonymous,
+            anonymous: true,
             pic: "",
             name: "",
             time: 1509526435275 + this.replys.length * 1000,
@@ -136,14 +107,7 @@
 
 <style scoped lang="less" type="text/less">
 
-  .list-group-custom {
-    margin-top: 20px;
-    margin-left: 20px;
-
-    .item-custom {
-      background-color: #f7f7f7;
-      border: none;
-    }
+  .reply-custom {
+    padding-top: 10px;
   }
-
 </style>

@@ -12,7 +12,7 @@
   import CardItem from "@/components/cards/CardItem"
   import Remarks from "@/components/remark/Remarks"
   import {getCardInfoById, getRemarksById} from "@/mock/card_mock"
-  import UserInputPanel from "@/components/remark/UserInputPanel"
+  import UserInputPanel from "@/components/common/UserInputPanel"
 
   export default {
     components: {
@@ -50,6 +50,7 @@
       },
       getCardRemarks() {
         if (this.debug) {
+          console.log("RemarkDetails: " + this.id);
           this.remarks = getRemarksById(this.id);
         }
         else {
@@ -60,13 +61,13 @@
         if(this.debug){
           let oRemark = {
             id: this.remarks.length,
-            anonymous: bAnonymous,
+            anonymous: true,
             pic: "",
             name: "",
             time: 1509526435275 + 10000,
             msg: strMessage,
-            replyNum: 0,
-            praiseNum: 0
+            replyNum: 30,
+            praiseNum: 300
           };
           this.remarks.unshift(oRemark);
           this.$refs.ref4AddRemark.clearInputMessage();

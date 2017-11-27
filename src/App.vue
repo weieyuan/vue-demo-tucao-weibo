@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="page">
     <custom-head></custom-head>
     <div class="content">
       <div class="container main-container">
@@ -23,7 +23,11 @@
 </script>
 
 <style scoped lang="less" type="text/less">
+  .page{
+    height: 100%;
+  }
   .content {
+    min-height: 100%;
     background-color: #ebebeb;
     .main-container {
       padding-top: 35px;

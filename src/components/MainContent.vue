@@ -7,6 +7,14 @@
             <ins>有新的消息，点击查看</ins>
           </div>
         </div>
+
+        <div class="panel panel-default card-publish">
+          <div class="panel-heading"><strong>有什么想吐槽的，一吐为快吧</strong></div>
+          <div class="panel-body card-body">
+            <user-input-panel ref="ref4PublishCard" btnName="发布" @onClickBtn="onClickPublishCardBtn"></user-input-panel>
+          </div>
+        </div>
+
         <cards :cards="cards"
                @onClickRemark="onClickRemark"></cards>
       </div>
@@ -31,18 +39,20 @@
 <script>
   import debounce from "@/widget/debounce"
   import Cards from "@/components/cards/cards"
-  import CardMock, {getNewMsgs} from "@/mock/card_mock"
+  import UserInputPanel from "@/components/common/UserInputPanel"
+  import CardMock, {getNewMsgs, addCard} from "@/mock/card_mock"
 
   export default {
     components: {
-      Cards
+      Cards,
+      UserInputPanel
     },
     name: "MainContent",
     data: function () {
       return {
-        //region
-        suspened: false,
+        //region newMsg
         hasNewMsg: true,
+        suspened: false,
         //endregion
         //region cards
         cards: [],
@@ -69,7 +79,6 @@
       }, 500),
       onClickNewMsg() {
         if (this.debug) {
-          console.log("onClickNewMsg");
           getNewMsgs();
           this.hasNewMsg = false;
           setTimeout(() => {
@@ -88,6 +97,15 @@
             id: oCard.id
           }
         });
+      },
+      onClickPublishCardBtn(strMsg, bAnonymous) {
+        if (this.debug) {
+          addCard(strMsg, bAnonymous);
+          this.$refs.ref4PublishCard.clearInputMessage();
+        }
+        else {
+          //TODO:
+        }
       }
     },
     created() {
@@ -111,6 +129,7 @@
   @import "../css/const.less";
 
   .main-content {
+    font-size: 14px;
     .new-info {
       text-align: center;
       vertical-align: middle;
@@ -161,6 +180,22 @@
     }
     .anchor:hover {
       background-color: #F4645F;
+    }
+  }
+
+  .card-publish-head {
+    color: #333;
+    background-color: #f5f5f5;
+  }
+
+  .card-publish {
+    border: none;
+    .panel-heading {
+      color: #1b7fb6;
+    }
+    .card-body {
+      padding: 0;
+      border: none;
     }
   }
 </style>
