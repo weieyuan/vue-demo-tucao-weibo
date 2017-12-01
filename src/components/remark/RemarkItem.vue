@@ -19,6 +19,7 @@
   import UserInputPanel from "@/components/common/UserInputPanel"
   import InfoDisplayItem from "@/components/common/InfoDisplayItem"
   import Replys from "@/components/remark/Replys"
+  import {mapState} from "vuex"
 
   export default {
     components: {
@@ -60,7 +61,12 @@
           icon: "glyphicon-envelope"
         });
         return oRemarkInfo;
-      }
+      },
+      ...mapState({
+        cardId: (state) => {
+          return state.RemarkDetails.cardId
+        }
+      })
     },
     methods: {
       onClick4RemarkBtn(oRemarkRightBtn) {
@@ -75,7 +81,9 @@
         else if (oRemarkRightBtn.key == "reply") {
           this.showReply = !this.showReply;
           if (this.debug) {
-            this.replys = getReplysById("", "");
+            this.replys = getReplysById(this.remarkInner.id, this.cardId);
+            console.log("sss: " + this.cardId);
+//            console.log(this.$store.state.RemarkDetails.cardId);
           }
           else {
 

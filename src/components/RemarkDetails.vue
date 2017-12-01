@@ -13,6 +13,8 @@
   import Remarks from "@/components/remark/Remarks"
   import {getCardInfoById, getRemarksById} from "@/mock/card_mock"
   import UserInputPanel from "@/components/common/UserInputPanel"
+  import Vue from "vue"
+  import store from "@/store"
 
   export default {
     components: {
@@ -50,15 +52,14 @@
       },
       getCardRemarks() {
         if (this.debug) {
-          console.log("RemarkDetails: " + this.id);
           this.remarks = getRemarksById(this.id);
         }
         else {
           //TODO
         }
       },
-      addRemark(strMessage, bAnonymous){
-        if(this.debug){
+      addRemark(strMessage, bAnonymous) {
+        if (this.debug) {
           let oRemark = {
             id: this.remarks.length,
             anonymous: true,
@@ -72,10 +73,14 @@
           this.remarks.unshift(oRemark);
           this.$refs.ref4AddRemark.clearInputMessage();
         }
-        else{
+        else {
           //TODO:
         }
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      store.commit("setCardId", to.params.id);//在watch中观察id的变化，然后再setCardId，更简单些
+      next();
     }
   }
 </script>

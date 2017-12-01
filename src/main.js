@@ -8,11 +8,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 import "@/css/app.less"
 import VueResource from "vue-resource"
+import store from "@/store"
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 // Vue.http.options.emulateJSON = true
+
 
 Vue.mixin({
   data() {
@@ -26,6 +28,7 @@ Vue.mixin({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App}
 })

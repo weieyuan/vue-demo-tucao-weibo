@@ -22,6 +22,7 @@
   import CEmoji from "@/widget/emoji/CEmoji"
   import {EmojiItem, DisplayInfoWithEmoji} from "@/widget/emoji"
   import Parent from "./Parent"
+  import {fui, a} from "./A.js"
 
   export default {
     components: {
@@ -40,7 +41,8 @@
       }
     },
     created() {
-
+      console.log(fui);
+      console.log(a);
     },
     methods: {
       onClickIcon(emoji, event) {
