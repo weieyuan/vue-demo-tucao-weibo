@@ -37,6 +37,10 @@ module.exports = {
         pathRewrite: function(path){
           return path.replace("/test", "");
         }
+      },
+      "/promise": {
+        target: "http://127.0.0.1:8089",
+        changeOrigin: false
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

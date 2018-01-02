@@ -14,10 +14,12 @@
     <parent></parent>
     <emoji-item emojiObj="grinning"></emoji-item>
     <display-info-with-emoji :msg="msg"></display-info-with-emoji>
+    <button @click="onClickTestPromise">onClickTestPromise</button>
   </div>
 </template>
 
 <script>
+  import Vue from "vue"
   import {Picker, Emoji} from "emoji-mart-vue"
   import CEmoji from "@/widget/emoji/CEmoji"
   import {EmojiItem, DisplayInfoWithEmoji} from "@/widget/emoji"
@@ -54,6 +56,25 @@
       },
       showEmoji(event) {
         this.$refs.ref4Emoji.show(event.offsetX, event.offsetY);
+      },
+      onClickTestPromise() {
+        Vue.http.post("/promise/1")
+          .then(function (response) {
+            console.log(response);
+            return Vue.http.post("/promise/2")
+          }, function () {
+          })
+          .then(function (response) {
+            console.log(response);
+            return Vue.http.post("/promise/3")
+          }, function () {
+
+          })
+          .then(function (response) {
+            console.log(response);
+          }, function () {
+
+          });
       }
     }
   }

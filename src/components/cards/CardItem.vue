@@ -31,6 +31,13 @@
         }
         else {
           //TODO:post后台
+          let promise = new Promise((resolve, reject) => {
+
+          }).then((oRes) => {
+
+          }, (oRes) => {
+
+          });
         }
       },
       onClickRemark() {
