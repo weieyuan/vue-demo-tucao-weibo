@@ -4,5 +4,6 @@ export const cardConfig = {
 };
 
 export const globalConfig = {
-  debug: true
+  debug: true,
+  baseUrl: "tucao"
 };

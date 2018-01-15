@@ -19,7 +19,8 @@ Vue.use(VueResource)
 Vue.mixin({
   data() {
     return {
-      debug: globalConfig.debug
+      debug: globalConfig.debug,
+      baseUrl: globalConfig.baseUrl
     }
   }
 })

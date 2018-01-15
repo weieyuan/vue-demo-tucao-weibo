@@ -11,7 +11,7 @@
 <script>
   import CardItem from "@/components/cards/CardItem"
   import Remarks from "@/components/remark/Remarks"
-  import {getCardInfoById, getRemarksById} from "@/mock/card_mock"
+  import {getCardInfoById, getRemarksByCardId, addRemark} from "@/mock/card_mock"
   import UserInputPanel from "@/components/common/UserInputPanel"
   import Vue from "vue"
   import store from "@/store"
@@ -48,33 +48,42 @@
         }
         else {
           //TODO
+          this.$http.post(this.baseUrl + "/card/get/" + this.id).then((resp) => {
+            let oCard = resp.body;
+            this.card = oCard;
+          });
         }
       },
       getCardRemarks() {
         if (this.debug) {
-          this.remarks = getRemarksById(this.id);
+          this.remarks = getRemarksByCardId(this.id);
         }
         else {
           //TODO
+          this.$http.post(this.baseUrl + "/remark/get/" + this.id).then((resp) => {
+            let oRemarksRes = resp.body;
+            this.remarks = oRemarksRes;
+          });
         }
       },
       addRemark(strMessage, bAnonymous) {
         if (this.debug) {
-          let oRemark = {
-            id: this.remarks.length,
-            anonymous: true,
-            pic: "",
-            name: "",
-            time: 1509526435275 + 10000,
-            msg: strMessage,
-            replyNum: 30,
-            praiseNum: 300
-          };
-          this.remarks.unshift(oRemark);
+          this.card.remarkNum += 1;
+          addRemark(this.id, strMessage, bAnonymous);
           this.$refs.ref4AddRemark.clearInputMessage();
         }
         else {
-          //TODO:
+          //TODO
+          let oRemark = {
+            anonymous: bAnonymous,
+            time: Date.now(),
+            msg: strMessage,
+          };
+          this.$http.post(this.baseUrl + "/remark/add/" + this.id, oRemark).then((resp) => {
+            let oRemarkRes = resp.body;
+            this.remarks.unshift(oRemarkRes);
+            this.$refs.ref4AddRemark.clearInputMessage();
+          });
         }
       }
     },

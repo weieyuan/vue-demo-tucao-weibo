@@ -11,7 +11,7 @@
         <div class="panel panel-default card-publish">
           <div class="panel-heading"><strong>有什么想吐槽的，一吐为快吧</strong></div>
           <div class="panel-body card-body">
-            <user-input-panel ref="ref4PublishCard" btnName="发布" @onClickBtn="onClickPublishCardBtn"></user-input-panel>
+            <user-input-panel ref="ref4PublishCard" btnName="发布" @onClickBtn="onClickAddCardBtn"></user-input-panel>
           </div>
         </div>
 
@@ -29,7 +29,6 @@
         </div>
       </div>
     </div>
-    主页 laravel
     <a class="anchor" v-show="showAnchor" href="#">
       <span class="glyphicon glyphicon-chevron-up"></span>
     </a>
@@ -98,13 +97,23 @@
           }
         });
       },
-      onClickPublishCardBtn(strMsg, bAnonymous) {
+      onClickAddCardBtn(strMsg, bAnonymous) {
         if (this.debug) {
           addCard(strMsg, bAnonymous);
           this.$refs.ref4PublishCard.clearInputMessage();
         }
         else {
           //TODO:
+          let oCard = {
+            anonymous: bAnonymous,
+            time: Date.now(),
+            msg: strMsg
+          };
+          this.$http.post(this.baseUrl + "/card/add", oCard).then((resp) => {
+            let oCardRes = resp.body;
+            this.$refs.ref4PublishCard.clearInputMessage();
+            this.cards.unshift(oCardRes);
+          });
         }
       }
     },
@@ -117,6 +126,10 @@
       }
       else {
         //TODO
+        this.$http.post(this.baseUrl + "/card/getAll").then((resp) => {
+          let oRes = resp.body;
+          this.cards = oRes;
+        });
       }
     },
     destroyed() {

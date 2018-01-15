@@ -1,5 +1,6 @@
 const cards = [];
 const remarks = {};
+const replys = {};
 
 for (let i = 0; i < 10; i++) {
   //一条微博
@@ -26,9 +27,25 @@ for (let i = 0; i < 10; i++) {
       time: 1509526435275 + j * 1000,
       msg: "素质真低，坚决抵制，无法无天，绝不姑息",
       praiseNum: 300, //点赞数
-      replyNum: 30 //回复数
+      replyNum: 10 //回复数
     };
     arrRemark.push(oRemark);
+
+    //回复
+    let arrReply = [];
+    for (let k = 0; k < 10; k++) {
+      let oReply = {
+        id: k,
+        anonymous: true,
+        pic: "",
+        name: "",
+        time: 1509526435275 + k * 1000,
+        msg: "干的漂亮",
+        praiseNum: 300 //点赞数
+      };
+      arrReply.push(oReply);
+    }
+    replys[i + "_" + j] = arrReply;
   }
   remarks[card.id] = arrRemark;
 }
@@ -60,27 +77,44 @@ function getCardInfoById(strCardId) {
   }
 };
 
-function getRemarksById(strCardId) {
+function getRemarksByCardId(strCardId) {
   return remarks[strCardId];
 };
 
-function getReplysById(strCardId, strRemarkId) {
-  let arrReply = [];
-  for (let i = 0; i < 30; i++) {
-    //一条回复
-    let oReply = {
-      id: i,
-      anonymous: true,
-      pic: "",
-      name: "",
-      time: 1509526435275 + i * 1000,
-      msg: "干的漂亮",
-      praiseNum: 300 //点赞数
-    };
-    arrReply.push(oReply);
-  }
-  return arrReply;
+function addRemark(strCardId, strMsg, bAnonymous) {
+  let arrRemark = remarks[strCardId];
+  let oRemark = {
+    id: arrRemark.length,
+    anonymous: bAnonymous,
+    pic: "",
+    name: "",
+    time: 1509526435275 + 10000,
+    msg: strMsg,
+    replyNum: 0,
+    praiseNum: 0
+  };
+  arrRemark.unshift(oRemark);
+
+  replys[strCardId + "_" + oRemark.id] = [];
 };
+
+function getReplysById(strCardId, strRemarkId) {
+  return replys[strCardId + "_" + strRemarkId];
+};
+
+function addReply(strCardId, strRemarkId, strMsg, bAnonymous) {
+  let arrReply = replys[strCardId + "_" + strRemarkId];
+  let oReply = {
+    id: arrReply.length,
+    anonymous: bAnonymous,
+    pic: "",
+    name: "",
+    time: 1509526435275 + arrReply.length * 1000,
+    msg: strMsg,
+    praiseNum: 0
+  };
+  arrReply.unshift(oReply);
+}
 
 function getNewMsgs() {
   for (let i = 0; i < 10; i++) {
@@ -108,9 +142,25 @@ function getNewMsgs() {
         time: 1509526435275 + j * 1000,
         msg: "素质真低，坚决抵制，无法无天，绝不姑息",
         praiseNum: 300,
-        replyNum: 30
+        replyNum: 10
       };
       arrRemark.push(oRemark);
+
+      //回复
+      let arrReply = [];
+      for (let k = 0; k < 10; k++) {
+        let oReply = {
+          id: k,
+          anonymous: true,
+          pic: "",
+          name: "",
+          time: 1509526435275 + k * 1000,
+          msg: "干的漂亮",
+          praiseNum: 300 //点赞数
+        };
+        arrReply.push(oReply);
+      }
+      replys[card.id + "_" + oRemark.id] = arrReply;
     }
     remarks[card.id] = arrRemark;
   }
@@ -118,10 +168,12 @@ function getNewMsgs() {
 
 export {
   getCardInfoById,
-  getRemarksById,
+  getRemarksByCardId,
   getReplysById,
   getNewMsgs,
-  addCard
+  addCard,
+  addRemark,
+  addReply
 };
 
 export default cards;

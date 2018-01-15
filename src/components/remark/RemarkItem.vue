@@ -15,19 +15,19 @@
 <script>
   import {cardConfig} from "@/config"
   import timeFormat from "@/components/common/time_format"
-  import {getReplysById} from "@/mock/card_mock"
+  import {getReplysById, addReply} from "@/mock/card_mock"
   import UserInputPanel from "@/components/common/UserInputPanel"
   import InfoDisplayItem from "@/components/common/InfoDisplayItem"
-  import Replys from "@/components/remark/Replys"
+  import Replys from "@/components/reply/Replys"
   import {mapState} from "vuex"
 
   export default {
+    name: "RemarkItem",
     components: {
       UserInputPanel,
       Replys,
       InfoDisplayItem
     },
-    name: "RemarkItem",
     props: {
       remark: Object
     },
@@ -71,43 +71,67 @@
     methods: {
       onClick4RemarkBtn(oRemarkRightBtn) {
         if (oRemarkRightBtn.key == "praise") {
-          if (this.debug) {
-            this.remarkInner.praiseNum += 1;
-          }
-          else {
-
-          }
+          this.onClickPraiseBtn();
         }
         else if (oRemarkRightBtn.key == "reply") {
-          this.showReply = !this.showReply;
-          if (this.debug) {
-            this.replys = getReplysById(this.remarkInner.id, this.cardId);
-            console.log("sss: " + this.cardId);
+          this.onClickReplyBtn();
+        }
+      },
+      onClickPraiseBtn() {
+        if (this.debug) {
+          this.remarkInner.praiseNum += 1;
+        }
+        else {
+          //TODO
+          this.$http.post(this.baseUrl + "/remark/praise/" + this.remarkInner.id).then((resp) => {
+            this.remarkInner.praiseNum += 1;
+          });
+        }
+      },
+      onClickReplyBtn() {
+        this.showReply = !this.showReply;
+        if (this.debug) {
+          this.replys = getReplysById(this.cardId, this.remarkInner.id);
+          console.log("sss: " + this.cardId);
 //            console.log(this.$store.state.RemarkDetails.cardId);
-          }
-          else {
-
+        }
+        else {
+          //TODO
+          if (this.remarkInner.replyNum > 0 && this.remarkInner.replyNum != this.replys.length) {
+            this.$http.post(this.baseUrl + "/reply/getByRemarkId/" + this.remarkInner.id).then((resp) => {
+              let arrReply = resp.body;
+              this.replys = arrReply;
+            });
           }
         }
       },
       addReply(strMessage, bAnonymous) {
-        this.remarkInner.replyNum += 1;
         if (this.debug) {
-          let oReply = {
-            id: this.replys.length,
-            anonymous: true,
-            pic: "",
-            name: "",
-            time: 1509526435275 + this.replys.length * 1000,
-            msg: strMessage,
-            praiseNum: 300
-          };
-          this.replys.unshift(oReply);
+          this.remarkInner.replyNum += 1;
+          addReply(this.cardId, this.remarkInner.id, strMessage, bAnonymous);
           this.$refs.ref4AddReply.clearInputMessage();
         }
         else {
           //TODO
+          let oReply = {
+            anonymous: bAnonymous,
+            time: Date.now(),
+            msg: strMessage
+          };
+          this.$http.post(this.baseUrl + "/reply/add/" + this.remarkInner.id, oReply).then((resp) => {
+            let oReplyRes = resp.body;
+            this.replys.unshift(oReplyRes);
+            this.$refs.ref4AddReply.clearInputMessage();
+          });
         }
+      }
+    },
+    watch: {
+      remark: {
+        handler(oNewVal, oOldVal) {
+          this.remarkInner = this.remark;
+        },
+        deep: false
       }
     }
   }

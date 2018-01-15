@@ -41,6 +41,10 @@ module.exports = {
       "/promise": {
         target: "http://127.0.0.1:8089",
         changeOrigin: false
+      },
+      "/tucao": {
+        target: "http://127.0.0.1:8089",
+        changeOrigin: false
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

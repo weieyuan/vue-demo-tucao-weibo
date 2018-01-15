@@ -1,6 +1,6 @@
 <template>
   <div class="panel panel-default panel-custom">
-    <info-display-item :info="cardInfo" @onClickRightBtn="onClickRightBtn"></info-display-item>
+    <info-display-item v-if="showCardInfo" :info="cardInfo" @onClickRightBtn="onClickRightBtn"></info-display-item>
   </div>
 </template>
 
@@ -23,36 +23,10 @@
         cardInner: this.card
       }
     },
-    methods: {
-      onClickPraise() {
-        this.cardInner.praiseNum += 1;
-        if (this.debug) {
-          console.log("onClickPraise");
-        }
-        else {
-          //TODO:post后台
-          let promise = new Promise((resolve, reject) => {
-
-          }).then((oRes) => {
-
-          }, (oRes) => {
-
-          });
-        }
-      },
-      onClickRemark() {
-        this.$emit("onClickRemark", this.cardInner);
-      },
-      onClickRightBtn(oRigthBtn) {
-        if (oRigthBtn.key == "praise") {
-          this.onClickPraise();
-        }
-        else if (oRigthBtn.key == "remark") {
-          this.onClickRemark();
-        }
-      }
-    },
     computed: {
+      showCardInfo() {
+        return this.card.id != undefined;
+      },
       cardInfo() {
         let oCardInfo = {
           pic: "",
@@ -73,6 +47,36 @@
           icon: "glyphicon-comment"
         });
         return oCardInfo;
+      }
+    },
+    methods: {
+      onClickPraise() {
+        if (this.debug) {
+          this.cardInner.praiseNum += 1;
+          console.log("onClickPraise");
+        }
+        else {
+          //TODO
+          this.$http.post(this.baseUrl + "/card/praise/" + this.cardInner.id).then((resp) => {
+            this.cardInner.praiseNum += 1;
+          });
+        }
+      },
+      onClickRemark() {
+        this.$emit("onClickRemark", this.cardInner);
+      },
+      onClickRightBtn(oRigthBtn) {
+        if (oRigthBtn.key == "praise") {
+          this.onClickPraise();
+        }
+        else if (oRigthBtn.key == "remark") {
+          this.onClickRemark();
+        }
+      }
+    },
+    watch: {
+      card: function (oNewVal, oOldVal) {
+        this.cardInner = oNewVal;
       }
     }
   }
