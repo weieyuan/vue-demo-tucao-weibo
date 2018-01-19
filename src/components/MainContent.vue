@@ -118,7 +118,13 @@
       }
     },
     created() {
+      //绑定滚轮事件
       window.addEventListener("scroll", this.onMousewheel)
+      //订阅websocket消息
+      this.$subscribe("/card/newMsg", (message) => {
+        this.hasNewMsg = true;
+        console.log(message);
+      });
     },
     mounted() {
       if (this.debug) {

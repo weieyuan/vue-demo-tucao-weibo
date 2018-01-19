@@ -25,6 +25,7 @@
 
 <script>
   import {smileEmoji, EmojiItem, CEmoji, convertEmoji2Str} from "@/widget/emoji"
+  import Utils from "@/widget/utils"
 
   export default {
     components: {
@@ -56,9 +57,11 @@
       onClickEmojiBtn(emoji, event) {
         this.$refs.ref4CEmoji.show(event.offsetX + 24, event.offsetY + 24);
       },
-      onClickChooseEmoji(emoji){
+      onClickChooseEmoji(emoji) {
         let str = convertEmoji2Str(emoji);
-        this.inputMessage += str;
+        let oElement = this.$el.querySelector("textarea");
+        let index = oElement.selectionStart;//返回选中文本的开始索引，如果没有选中文本，那么返回光标后字符的索引
+        this.inputMessage = Utils.insert4String(this.inputMessage, index, str);
       }
     }
   }

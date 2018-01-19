@@ -45,6 +45,11 @@ module.exports = {
       "/tucao": {
         target: "http://127.0.0.1:8089",
         changeOrigin: false
+      },
+      "/tucao/ws/tucao": {
+        target: "http://127.0.0.1:8089",
+        ws: true,
+        changeOrigin: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

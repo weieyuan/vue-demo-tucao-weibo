@@ -3,7 +3,11 @@ export const cardConfig = {
   DEFAULT_NAME: "匿***名"
 };
 
-export const globalConfig = {
+const baseUrl = "tucao"
+const globalConfig = {
   debug: true,
-  baseUrl: "tucao"
+  baseUrl,
+  endPoint: baseUrl + "/ws/tucao"
 };
+
+export {globalConfig};

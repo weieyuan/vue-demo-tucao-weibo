@@ -9,12 +9,15 @@ import 'bootstrap/dist/js/bootstrap.js'
 import "@/css/app.less"
 import VueResource from "vue-resource"
 import store from "@/store"
+import Stomp from "@/widget/stomp"
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 // Vue.http.options.emulateJSON = true
 
+//stomp
+Vue.use(Stomp, {endPoint: globalConfig.endPoint})
 
 Vue.mixin({
   data() {
