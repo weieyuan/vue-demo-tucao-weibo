@@ -1,5 +1,5 @@
 # vue-demo-tucao-weiblog  
-这是一个使用Vue实现的简易微博系统。前后台分离，纯前台可独立运行和调试。
+这是一个使用Vue实现的简易微博系统。前后台分离，纯前台可独立运行和调试。  
 微博系统的后端使用Spring Boot实现，[移步到后端系统](https://github.com/weieyuan/spring-boot-tucao-weibo).
 
 #### Demo
