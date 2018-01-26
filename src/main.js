@@ -28,6 +28,9 @@ Vue.mixin({
   }
 })
 
+//初始化clientId，用于唯一标识一个客户端
+store.commit("setClientId", Math.random().toString(36).slice(2))
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

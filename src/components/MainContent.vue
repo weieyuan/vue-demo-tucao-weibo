@@ -40,6 +40,7 @@
   import Cards from "@/components/cards/cards"
   import UserInputPanel from "@/components/common/UserInputPanel"
   import CardMock, {getNewMsgs, addCard} from "@/mock/card_mock"
+  import {mapGetters} from "vuex"
 
   export default {
     components: {
@@ -50,7 +51,7 @@
     data: function () {
       return {
         //region newMsg
-        hasNewMsg: true,
+        hasNewMsg: false,
         suspened: false,
         //endregion
         //region cards
@@ -60,6 +61,11 @@
         showAnchor: false
         //endregion
       };
+    },
+    computed: {
+      ...mapGetters({
+        clientId: "getClientId"
+      })
     },
     methods: {
       onMousewheel: debounce(function (oEvent) {
@@ -87,6 +93,17 @@
         }
         else {
           //TODO
+          let cardId;
+          if (this.cards.length) {
+            cardId = -1;
+          }
+          else {
+            cardId = this.cards[0].id;
+          }
+          this.$http.post(this.baseUrl + "/card/newMsg", {cardId}, (resp) => {
+            let arrCard = resp.body;
+            this.cards = arrCard.concat(this.cards);
+          });
         }
       },
       onClickRemark(oCard) {
@@ -109,7 +126,7 @@
             time: Date.now(),
             msg: strMsg
           };
-          this.$http.post(this.baseUrl + "/card/add", oCard).then((resp) => {
+          this.$http.post(this.baseUrl + "/card/add/" + this.$store.getters.getClientId, oCard).then((resp) => {
             let oCardRes = resp.body;
             this.$refs.ref4PublishCard.clearInputMessage();
             this.cards.unshift(oCardRes);
@@ -122,8 +139,22 @@
       window.addEventListener("scroll", this.onMousewheel)
       //订阅websocket消息
       this.$subscribe("/card/newMsg", (message) => {
-        this.hasNewMsg = true;
-        console.log(message);
+        let oMessage = JSON.parse(message.body);
+        //如果是同一个客户端，不处理
+        if(this.clientId == oMessage.clientId){
+          return;
+        }
+        if (oMessage.newMsg == true) {
+          if (this.cards.length == 0) {
+            this.hasNewMsg = true;
+          }
+          else {
+            let id = this.cards[0].id;
+            if (oMessage.cardId > id) {
+              this.hasNewMsg = true;
+            }
+          }
+        }
       });
     },
     mounted() {
