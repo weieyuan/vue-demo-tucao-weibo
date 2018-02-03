@@ -1,3 +1,5 @@
+import store from "@/store";
+
 const cards = [];
 const remarks = {};
 const replys = {};
@@ -7,8 +9,8 @@ for (let i = 0; i < 10; i++) {
   let card = {
     id: i,
     anonymous: true,
-    pic: "",
-    name: "",
+    pic: store.state.user.pic,
+    name: store.state.user.name,
     time: 1509526435275 + i * 1000,
     praiseNum: 100, //点赞数
     remarkNum: 10, //评论数
@@ -22,8 +24,8 @@ for (let i = 0; i < 10; i++) {
     let oRemark = {
       id: j,
       anonymous: true,
-      pic: "",
-      name: "",
+      pic: store.state.user.pic,
+      name: store.state.user.name,
       time: 1509526435275 + j * 1000,
       msg: "素质真低，坚决抵制，无法无天，绝不姑息",
       praiseNum: 300, //点赞数
@@ -37,8 +39,8 @@ for (let i = 0; i < 10; i++) {
       let oReply = {
         id: k,
         anonymous: true,
-        pic: "",
-        name: "",
+        pic: store.state.user.pic,
+        name: store.state.user.name,
         time: 1509526435275 + k * 1000,
         msg: "干的漂亮",
         praiseNum: 300 //点赞数
@@ -54,9 +56,9 @@ function addCard(strMsg, bAnonymous) {
   //一条微博
   let card = {
     id: cards.length,
-    anonymous: true,
-    pic: "",
-    name: "",
+    anonymous: bAnonymous,
+    pic: store.state.user.pic,
+    name: store.state.user.name,
     time: 1509526435275 + cards.length * 1000,
     praiseNum: 0, //点赞数
     remarkNum: 0, //评论数
@@ -86,8 +88,8 @@ function addRemark(strCardId, strMsg, bAnonymous) {
   let oRemark = {
     id: arrRemark.length,
     anonymous: bAnonymous,
-    pic: "",
-    name: "",
+    pic: store.state.user.pic,
+    name: store.state.user.name,
     time: 1509526435275 + 10000,
     msg: strMsg,
     replyNum: 0,
@@ -107,8 +109,8 @@ function addReply(strCardId, strRemarkId, strMsg, bAnonymous) {
   let oReply = {
     id: arrReply.length,
     anonymous: bAnonymous,
-    pic: "",
-    name: "",
+    pic: store.state.user.pic,
+    name: store.state.user.name,
     time: 1509526435275 + arrReply.length * 1000,
     msg: strMsg,
     praiseNum: 0
@@ -122,8 +124,8 @@ function getNewMsgs() {
     let card = {
       id: cards.length,
       anonymous: true,
-      pic: "",
-      name: "",
+      pic: store.state.user.pic,
+      name: store.state.user.name,
       time: 1509526435275 + i * 1000,
       msg: "新消息" + cards.length,
       praiseNum: 100,
@@ -137,8 +139,8 @@ function getNewMsgs() {
       let oRemark = {
         id: j,
         anonymous: true,
-        pic: "",
-        name: "",
+        pic: store.state.user.pic,
+        name: store.state.user.name,
         time: 1509526435275 + j * 1000,
         msg: "素质真低，坚决抵制，无法无天，绝不姑息",
         praiseNum: 300,
@@ -152,8 +154,8 @@ function getNewMsgs() {
         let oReply = {
           id: k,
           anonymous: true,
-          pic: "",
-          name: "",
+          pic: store.state.user.pic,
+          name: store.state.user.name,
           time: 1509526435275 + k * 1000,
           msg: "干的漂亮",
           praiseNum: 300 //点赞数

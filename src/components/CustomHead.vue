@@ -1,14 +1,34 @@
 <template>
   <nav class="main-navigation">
     <div class="logo">
-      <img src="/static/images/logo.png">
+      <img :src="publicPath + '/images/logo.png'">
     </div>
     <div class="rightContent">
       <div class="container">
-        <span class="nav-item" @click="onClickMainPage">首页</span>
-        <span class="nav-item">注册</span>
-        <span class="nav-item">登录</span>
-        <span class="nav-item" @click="onClickTest">Test</span>
+        <router-link tag="li" class="nav-item" exact exact-active-class="active"
+                     :to="{name: 'MainContent'}">
+          <span class="glyphicon glyphicon-home"></span> 首页
+        </router-link>
+        <router-link v-if="!isLogined" tag="li" class="nav-item" exact exact-active-class="active"
+                     :to="{name: 'Registry'}">
+          <span class="glyphicon glyphicon-registration-mark"></span> 注册
+        </router-link>
+        <router-link v-if="!isLogined" tag="li" class="nav-item" exact exact-active-class="active"
+                     :to="{name: 'Login'}">
+          <span class="glyphicon glyphicon-log-in"></span>
+          登录
+        </router-link>
+        <li v-if="isLogined" class="nav-item">
+          <span class="glyphicon glyphicon-log-out"></span> 注销
+        </li>
+        <router-link tag="li" class="nav-item" exact exact-active-class="active"
+                     :to="{name: 'Test'}">Test
+        </router-link>
+        <div class="left">
+          <li>
+            <span class="glyphicon glyphicon-user"></span> {{userName}}
+          </li>
+        </div>
       </div>
     </div>
   </nav>
@@ -20,16 +40,15 @@
     data: function () {
       return {};
     },
-    methods: {
-      onClickMainPage(){
-        this.$router.push({name: "MainContent"});
+    computed: {
+      userName() {
+        return this.$store.state.user.name;
       },
-      onClickTest() {
-        this.$router.push({
-          path: "/test"
-        });
+      isLogined() {
+        return this.$store.state.user.login;
       }
-    }
+    },
+    methods: {}
   }
 
 </script>
@@ -54,16 +73,37 @@
     }
 
     .rightContent {
-      width: calc(~"100%" - @logoWidth);
       float: left;
+      margin-left: 10px;
+      color: #FFFFFF;
+      font-size: 1.2em;
+      word-spacing: 2px;
 
       .nav-item {
-        color: #FFFFFF;
-        font-size: 12pt;
         margin: 0 10px;
+        padding-bottom: 2px;
+        list-style: none;
+        display: inline;
+        line-height: 1.5;
+        font-weight: normal;
       }
-      .nav-item:hover{
+      .nav-item:hover {
         cursor: pointer;
+        text-decoration: none;
+        border-bottom: 2px solid #00bfff;
+      }
+      .nav-item:active {
+        color: #00bfff;
+      }
+      .active {
+        text-decoration: none;
+        border-bottom: 2px solid #00bfff;
+      }
+      .left {
+        float: right;
+        li {
+          list-style: none;
+        }
       }
     }
   }

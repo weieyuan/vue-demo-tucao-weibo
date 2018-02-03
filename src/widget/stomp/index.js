@@ -1,10 +1,14 @@
 import SockJs from "sockjs-client"
 import Stomp from "stompjs"
 
+let m_Options = {};
 let bConnected = false
 let bFail = false
 
 const Disconnect = function () {
+  if (m_Options.debug) {
+    return;
+  }
   if (this.$stompClient && bConnected) {
     this.$stompClient.disconnect(() => {
       console.log("stomp disconnect from server");
@@ -14,6 +18,9 @@ const Disconnect = function () {
 
 let subscriberQueue = []
 const Subscribe = function (strTopic, oCallback) {
+  if (m_Options.debug) {
+    return;
+  }
   if (bFail) {
     throw "stomp connect to server failed"
   }
@@ -29,6 +36,9 @@ const Subscribe = function (strTopic, oCallback) {
 }
 
 const Send = function (...args) {
+  if (m_Options.debug) {
+    return;
+  }
   if (this.$stompClient && bConnected) {
     if (args.length == 2) {
       this.$stompClient.send(args[0], {}, args[1])
@@ -41,8 +51,23 @@ const Send = function (...args) {
 
 const Init = function (Vue, options) {
   //init
-  let m_Options = options || {}
+  m_Options = options || {debug: true}
+  _Init(Vue);
 
+  //disconnect
+  Vue.prototype.$disconnect = Disconnect
+
+  //subscribe
+  Vue.prototype.$subscribe = Subscribe
+
+  //send
+  Vue.prototype.$send = Send
+}
+
+const _Init = function (Vue) {
+  if (m_Options.debug) {
+    return;
+  }
   let socket = new SockJs(m_Options.endPoint)
   let stompClient = Stomp.over(socket)
   Vue.prototype.$stompClient = stompClient
@@ -61,15 +86,6 @@ const Init = function (Vue, options) {
     console.log("fail")
     console.error(error)
   })
-
-  //disconnect
-  Vue.prototype.$disconnect = Disconnect
-
-  //subscribe
-  Vue.prototype.$subscribe = Subscribe
-
-  //send
-  Vue.prototype.$send = Send
 }
 
 const install = function (Vue, options) {

@@ -6,7 +6,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    clientId: ""
+    clientId: "",
+    user: {
+      name: "",
+      pic: "",
+      login: false
+    }
   },
   getters: {
     getClientId(state) {
@@ -16,6 +21,9 @@ const store = new Vuex.Store({
   mutations: {
     setClientId(state, strClientId) {
       state.clientId = strClientId;
+    },
+    setUser(state, oUser){
+      state.user = oUser;
     }
   },
   modules: {

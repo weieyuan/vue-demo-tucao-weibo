@@ -17,11 +17,12 @@ Vue.use(VueResource)
 // Vue.http.options.emulateJSON = true
 
 //stomp
-Vue.use(Stomp, {endPoint: globalConfig.endPoint})
+Vue.use(Stomp, {endPoint: globalConfig.endPoint, debug: globalConfig.debug})
 
 Vue.mixin({
   data() {
     return {
+      publicPath, //webpack的配置文件中开放出来的变量
       debug: globalConfig.debug,
       baseUrl: globalConfig.baseUrl
     }

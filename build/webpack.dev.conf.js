@@ -1,4 +1,5 @@
 'use strict'
+const path =require("path")
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -20,7 +21,8 @@ module.exports = merge(baseWebpackConfig, {
   devtool: '#cheap-module-eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': config.dev.env
+      'process.env': config.dev.env,
+      publicPath: JSON.stringify(path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory))
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
