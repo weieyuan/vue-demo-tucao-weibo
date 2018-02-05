@@ -16,13 +16,16 @@ const store = new Vuex.Store({
   getters: {
     getClientId(state) {
       return state.clientId;
+    },
+    getUser(state) {
+      return state.user;
     }
   },
   mutations: {
     setClientId(state, strClientId) {
       state.clientId = strClientId;
     },
-    setUser(state, oUser){
+    setUser(state, oUser) {
       state.user = oUser;
     }
   },

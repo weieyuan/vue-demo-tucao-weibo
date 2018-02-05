@@ -114,6 +114,8 @@
         else {
           //TODO
           let oReply = {
+            name: this.$store.getters.getUser.name,
+            pic: this.$store.getters.getUser.pic,
             anonymous: bAnonymous,
             time: Date.now(),
             msg: strMessage
