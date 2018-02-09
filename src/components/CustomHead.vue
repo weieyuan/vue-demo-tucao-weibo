@@ -73,6 +73,8 @@
     }
 
     .rightContent {
+      width: calc(~"100% - @{logoWidth} - 10px");
+      height: 100%;
       float: left;
       margin-left: 10px;
       color: #FFFFFF;
