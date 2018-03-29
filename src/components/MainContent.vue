@@ -51,7 +51,7 @@
     data: function () {
       return {
         //region newMsg
-        hasNewMsg: false,
+        hasNewMsg: true,
         suspened: false,
         //endregion
         //region cards

@@ -15,6 +15,14 @@
     <emoji-item emojiObj="grinning"></emoji-item>
     <display-info-with-emoji :msg="msg"></display-info-with-emoji>
     <button @click="onClickTestPromise">onClickTestPromise</button>
+    <div>
+      <p>测试生命周期函数的执行</p>
+      <button @click="changeData">changeData</button>
+      <life-circle-test :items="items"></life-circle-test>
+    </div>
+    <div>
+      <mount-test></mount-test>
+    </div>
   </div>
 </template>
 
@@ -25,6 +33,8 @@
   import {EmojiItem, DisplayInfoWithEmoji} from "@/widget/emoji"
   import Parent from "./Parent"
   import {fui, a} from "./A.js"
+  import LifeCircleTest from "./LifeCircleTest"
+  import MountTest from "./MountTest"
 
   export default {
     components: {
@@ -33,13 +43,26 @@
       CEmoji,
       EmojiItem,
       DisplayInfoWithEmoji,
-      Parent
+      Parent,
+      LifeCircleTest,
+      MountTest
     },
     data: function () {
       return {
         emojis: [],
         bShowEmoji: false,
-        msg: "我们是ZHEGESHIDAI的[:grinning:][:smiley:]花朵和树苗[:smile:]sssss"
+        msg: "我们是ZHEGESHIDAI的[:grinning:][:smiley:]花朵和树苗[:smile:]sssss",
+        items: [
+          {
+            msg: "A"
+          },
+          {
+            msg: "B"
+          },
+          {
+            msg: "C"
+          }
+        ],
       }
     },
     created() {
@@ -75,6 +98,19 @@
           }, function () {
 
           });
+      },
+      changeData() {
+        this.items = [
+          {
+            msg: "A1"
+          },
+          {
+            msg: "B1"
+          },
+          {
+            msg: "C1"
+          }
+        ];
       }
     }
   }

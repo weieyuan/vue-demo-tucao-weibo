@@ -15,6 +15,12 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 // Vue.http.options.emulateJSON = true
+Vue.http.interceptors.push(function (request, next) {
+  console.log(request);
+  next(function(response){
+    console.log(response);
+  });
+})
 
 //stomp
 Vue.use(Stomp, {endPoint: globalConfig.endPoint, debug: globalConfig.debug})

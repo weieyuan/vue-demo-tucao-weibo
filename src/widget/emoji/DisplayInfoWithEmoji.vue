@@ -22,12 +22,15 @@
       msg: String
     },
     created() {
-      this.msgWithEmoji = convertStr2Emoji(this.msg);
+
     },
     data() {
-      return {
-        msgWithEmoji: []
-      };
+      return {};
+    },
+    computed: {
+      msgWithEmoji() {
+        return convertStr2Emoji(this.msg);
+      }
     }
   }
 
